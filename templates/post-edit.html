@@ -1,0 +1,32 @@
+{% extends "template.html" %}
+{% block content %}
+
+
+    <section class='dashboardEntry'>
+        <h2>Edit Post: {{username}}</h2>
+
+        <form class="u-flex u-column" method="post" action="">
+            <label>Title: </label>
+            <input class="dashboardEntry-title" type="text" name="title" value="{{ post[2] }}" placeholder="Title">
+
+            <label>Content: </label>
+            <textarea class="dashboardEntry-content" name="content" rows="10" placeholder="Your blog entry"> {{ post[3] }}</textarea>
+
+            <select class="dashboardEntry-categories" name="category">
+                <option>Select Category</option>
+
+                {% for category in categories %}
+                    <option
+                        {% if category.name == post[6] %} selected="true" {% endif %}
+                        value="{{ category.name }}">
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+
+            </select>
+            <button class="button button--submit" type="submit">Submit</button>
+        </form>
+    </section>
+
+
+{% endblock %}

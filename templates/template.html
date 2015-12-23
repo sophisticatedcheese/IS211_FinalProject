@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Blog | {{title}}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='/static/css/styles.css'  rel='stylesheet' type='text/css'>
+
+    </head>
+    <header class="u-flex u-maxX u-centerY">
+
+        <div class="header-actions">
+            <h1 class="header-title"><a href="/">Powered <i>by</i> Python</a></h1>
+            <a class="header-button" href="https://github.com/UmaMoiseenko/python_blog" target="_blank">View Project Source</a>
+        </div>
+
+        {% if session['logged_in'] %}
+            <ul class="nav u-flex u-fillRemaining u-flexEndY">
+                <li><a href="/">View Posts</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+            </ul>
+            <a class="login" href="/logout">Log Out</a>
+        {% else %}
+            {% if request.path != "/login" %}
+                <a class="login" href="/login">Log In</a>
+            {% endif %}
+        {% endif %}
+    </header>
+
+    <body>
+
+        <div
+            {% if request.path == "/login" %}
+                class="container container--noSidebar"
+            {% else %}
+                class="container"
+            {% endif %}>
+
+        {% if request.path != "/login" %}
+            <div class="sidebar">
+                <h2 class="sidebar-title">Categories:</h2>
+                <ul>
+
+                {% for category in categories %}
+                   <li class="u-flex u-centerY">
+                    <a class="u-flex u-fillRemaining category" href="/{{ category.name }}">{{ category.name }}</a>
+
+                    {% if request.path == "/dashboard"  %}
+                        <a href="remove-category/{{ category.name }}" class="remove u-flex u-centerY u-centerX"></a>
+                    {% endif %}
+
+                    </li>
+                {% endfor %}
+                </ul>
+
+                {% if request.path == "/dashboard"  %}
+                <form action="/add_category" method="POST">
+                    <input name="category" type="text" placeholder="New Category Name"/>
+                    <button class="button button--submit" type="submit">Add</button>
+                </form>
+                {% endif %}
+            </div>
+        {% endif %}
+
+
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

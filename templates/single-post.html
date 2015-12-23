@@ -1,0 +1,20 @@
+{% extends "template.html" %}
+{% block content %}
+    <section>
+        <div class="list">
+
+            <div class="lsit-item">
+
+                <div class="list-item-header">
+                    <h2 class="title">{{ post[2] }}</h2>
+                    <div class="meta">
+                        <span>by {{ post[1] }}</span>
+                        <span>on {{ post[6] }}</span>
+                    </div>
+                </div>
+                <div class="list-item-content">{{ post[3] }}</div>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

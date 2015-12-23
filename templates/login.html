@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+{% block content %}
+    <section>
+        <h1>Please login</h1>
+        <br>
+        <form class="form-signin" role="form" method="post" action="">
+            <div class="u-flex u-centerY">
+                <input type="text" placeholder="Username" name="username">
+                <input type="password" placeholder="Password" name="password">
+                <button type="submit" class="button" type="submit">Login</button>
+            </div>
+        </form>
+
+
+        {%for message in get_flashed_messages() %}
+            <p class="errorMessage">{{ message }}</p>
+        {% endfor %}
+    </section>
+{% endblock %}

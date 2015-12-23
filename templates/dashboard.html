@@ -1,0 +1,61 @@
+{% extends "template.html" %}
+
+{% block content %}
+    <section>
+        <h2>Posts List: {{username}}</h2>
+        <table >
+            <thead>
+                <th>Post Title</th>
+                <th>Status</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                 {% for post in posts %}
+
+                    <tr>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.pub_status }}</td>
+                        <td>{{ post.category }}</td>
+                        <td>
+                            <div class="u-flex">
+                                <a class="action" href="/edit/{{ post.id }}" >Edit</a>
+                                {% if 'unpublished' in post.pub_status %}
+                                    <a class="action" href="/publish/{{ post.id }}" >Go live!</a>
+                                {% else %}
+                                    <a class="action" href="/unpublish/{{ post.id }}" >Unpublish</a>
+                                {% endif %}
+                                <a class="action" href="/delete/{{ post.id }}" >Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                {% if posts | length == 0 %}
+                    <tr>
+                        <td colspan="3" class='emptyList'>Empty List </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </section>
+
+    <section class='dashboardEntry'>
+        <h2>Add New Post:</h2>
+        <form class="u-flex u-column" action="/add_post" method="POST">
+            <input class="dashboardEntry-title" type="text" name='title' placeholder="New Post Title"/>
+            <textarea class="dashboardEntry-content" name="content" rows="6" placeholder="Entry for your post"></textarea>
+            <select class="dashboardEntry-categories" name="category">
+                <option>Select Category</option>
+                {% for category in categories %}
+                    <option value="{{ category.name }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <button class="button button--submit" type="submit">Add Post</button>
+        </form>
+        {%for message in get_flashed_messages() %}
+            <p class="errorMessage">{{ message }}</p>
+        {% endfor %}
+    </section>
+{% endblock %}

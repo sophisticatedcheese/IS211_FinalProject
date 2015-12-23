@@ -1,0 +1,31 @@
+{% extends "template.html" %}
+{% block content %}
+    <section>
+        <div class="list">
+
+            {% for post in posts %}
+            <div class="lsit-item">
+
+                <div class="list-item-header">
+                    <h2 class="title"><a href="/posts/{{ post.id }}/{{ post.permalink }}">{{ post.title }}</a></h2>
+                    <div class="meta">
+                        <span>by {{ post.author }}</span>
+                        <span>on {{ post.date }}</span>
+
+                        {% if post.category  %}
+                            <span><a href="/{{ post.category }}">{{ post.category }}</a></span>
+                        {% endif %}
+                        <span>view at <a class="meta-link" href="/posts/{{ post.id }}/{{ post.permalink }}">{{ request.url_root }}/posts/{{ post.id }}/{{ post.permalink }}</a></span>
+                    </div>
+                </div>
+                <div class="list-item-content">{{ post.content }}</div>
+            </div>
+            {% endfor %}
+
+            {% if posts | length == 0 %}
+                <p class='emptyList'>No posts in this category yet.. </p>
+            {% endif %}
+
+        </div>
+    </section>
+{% endblock %}
